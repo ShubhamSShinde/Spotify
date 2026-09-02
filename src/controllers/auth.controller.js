@@ -19,14 +19,12 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create new user
-    const newUser = new userModel({
+    const newUser = await userModel.create({
       username,
       email,
       password: hashedPassword,
       role: role || "user",
     });
-
-    await newUser.save();
 
     const token = jwt.sign(
       { id: newUser._id, role: newUser.role },
