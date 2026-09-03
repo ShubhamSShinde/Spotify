@@ -46,7 +46,7 @@ const createAlbum = async (req, res) => {
 const getAllmusic = async (req, res) => {
   const albums = await musicModel.find()
   .skip(0)
-  .limit(2).populate("artist");
+  .limit(10).populate("artist");
 
   res.status(200).json({
     message: "Albums fetched successfully",
