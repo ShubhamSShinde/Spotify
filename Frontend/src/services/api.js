@@ -1,8 +1,13 @@
 import axios from 'axios';
 
+// Use empty baseURL so requests go to /api/... on the same origin.
+// Vite dev server proxies /api/* → http://localhost:3000 (see vite.config.js).
+// This avoids CORS entirely in development — the browser never sees a cross-origin request.
+// In production, deploy the frontend behind the same origin as the backend,
+// or set VITE_API_URL to the backend URL and ensure CORS + SameSite=None are configured.
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
-  withCredentials: true, // Send cookies with every request (JWT token)
+  baseURL: import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : '',
+  withCredentials: true, // still needed so cookies are sent through proxy
   headers: {
     'Content-Type': 'application/json',
   },

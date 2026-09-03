@@ -9,6 +9,8 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
+        // Rewrite cookie domain so browser accepts Set-Cookie from the backend
+        cookieDomainRewrite: 'localhost',
       },
     },
   },
