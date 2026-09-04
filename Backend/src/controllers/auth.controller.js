@@ -2,6 +2,18 @@ const userModel = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+"const getCookieOptions = (req) => {
+  const isProduction =
+    process.env.NODE_ENV === "production" ||
+    process.env.VERCEL === "1" ||
+    req?.headers["x-forwarded-proto"] === "https";
+  return {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
+  };
+};
+
 //register controller
 const registerUser = async (req, res) => {
   try {
@@ -31,7 +43,7 @@ const registerUser = async (req, res) => {
       process.env.JWT_SECRET,
     );
 
-    res.cookie("token", token);
+    res.cookie("token", token, getCookieOptions(req));
 
     res.status(201).json({
       message: "User registered successfully",
@@ -68,7 +80,7 @@ const loginUser = async (req, res) => {
     process.env.JWT_SECRET,
   );
 
-  res.cookie("token", token);
+  res.cookie("token", token, getCookieOptions(req));
 
   res.status(200).json({
     message: "login successfully",
@@ -81,7 +93,7 @@ const loginUser = async (req, res) => {
 };
 
 const logoutUser = (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", getCookieOptions(req));
   res.status(200).json({
     message: "Logout successful",
   });
