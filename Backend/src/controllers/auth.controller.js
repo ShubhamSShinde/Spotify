@@ -2,7 +2,7 @@ const userModel = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-"const getCookieOptions = (req) => {
+const getCookieOptions = (req) => {
   const isProduction =
     process.env.NODE_ENV === "production" ||
     process.env.VERCEL === "1" ||
@@ -97,6 +97,6 @@ const logoutUser = (req, res) => {
   res.status(200).json({
     message: "Logout successful",
   });
-}
+};
 
-module.exports = { registerUser, loginUser , logoutUser};
+module.exports = { registerUser, loginUser, logoutUser };
