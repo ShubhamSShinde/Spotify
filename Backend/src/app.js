@@ -29,6 +29,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
   })
 );
+///////////////////////////////////MAIN CODE////////////////////////////////////////////////////////
 
 app.use(express.json());
 app.use(cookieParser());
